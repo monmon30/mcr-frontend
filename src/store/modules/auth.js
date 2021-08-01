@@ -1,5 +1,7 @@
 import { useFetch, usePost } from "../../custom_hooks";
 import axios from "axios";
+import router from "../../router";
+import { ROLES } from "../../constants";
 
 const state = () => ({
   accessToken: sessionStorage.getItem("_token"),
@@ -8,6 +10,7 @@ const state = () => ({
 
 const getters = {
   GET_ACCESS_TOKEN: state => state.accessToken,
+  GET_USER: state => state.user,
 };
 
 const mutations = {
@@ -23,17 +26,21 @@ const mutations = {
 
 const actions = {
   async fetchAuthUser({ commit }) {
-    const { data, isError } = await useFetch("/auth/user");
-    commit("SET_USER", data);
-    if (isError) {
-      console.error("wala kang token men.");
-    }
+    const response = await useFetch("/auth/user");
+    commit("SET_USER", response.data);
+    return response;
   },
+
   async login({ commit, state, dispatch }, form) {
-    const { data } = await usePost("/auth/login", form);
+    const { data, isError: isErrorLogin } = await usePost("/auth/login", form);
     await commit("SET_ACCESS_TOKEN", `${data.token_type} ${data.access_token}`);
     axios.defaults.headers.common["Authorization"] = state.accessToken;
-    await dispatch("fetchAuthUser");
+    const { isError: isErrorFetchUser } = await dispatch("fetchAuthUser");
+    if (!isErrorLogin && !isErrorFetchUser) {
+      router.push({ name: "Redirect" });
+    } else {
+      throw "Invalid Credentials";
+    }
   },
 
   async logout({ commit }) {
@@ -41,6 +48,16 @@ const actions = {
     sessionStorage.removeItem("_token");
     await commit("SET_USER", null);
     await commit("SET_ACCESS_TOKEN", null);
+  },
+
+  async redirect({ state }) {
+    const [ADMIN, PHYSICIAN, ENCODER] = ROLES;
+    let roles = await state.user.attributes.roles;
+
+    if (roles == ADMIN) return router.push({ name: ADMIN });
+    if (roles == PHYSICIAN) return router.push({ name: PHYSICIAN });
+    if (roles == ENCODER) return router.push({ name: ENCODER });
+    return router.push({ name: "Home" });
   },
 };
 

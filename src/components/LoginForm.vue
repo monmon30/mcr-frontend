@@ -24,7 +24,7 @@ export default {
   data: () => ({
     loading: false,
     form: {
-      email: "mon@test.com",
+      email: "admin@test.com",
       password: "water123",
     },
   }),

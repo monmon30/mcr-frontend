@@ -20,7 +20,7 @@ export const useFetch = async url => {
   return { response, isError, data, loading };
 };
 
-export const usePost = async (url, form) => {
+export const usePost = async function (url, form) {
   let loading = false;
   let response = null;
   let isError = false;

@@ -19,6 +19,40 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "/redirect",
+    name: "Redirect",
+    component: () =>
+      import(/* webpackChunkName: "redirect" */ "../views/Redirect.vue"),
+  },
+
+  {
+    path: "/dashboard/admin",
+    name: "Admin",
+    component: () =>
+      import(/* webpackChunkName: "admin" */ "../views/Admin.vue"),
+  },
+
+  {
+    path: "/dashboard/physician",
+    name: "Physician",
+    component: () =>
+      import(/* webpackChunkName: "physician" */ "../views/Physician.vue"),
+  },
+
+  {
+    path: "/dashboard/encoder",
+    name: "Encoder",
+    component: () =>
+      import(/* webpackChunkName: "encoder" */ "../views/Encoder.vue"),
+  },
+
+  {
+    path: "/dashboard/patient",
+    name: "Patient",
+    component: () =>
+      import(/* webpackChunkName: "patient" */ "../views/Patient.vue"),
+  },
 ];
 
 const router = new VueRouter({
