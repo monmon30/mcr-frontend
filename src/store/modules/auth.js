@@ -48,6 +48,7 @@ const actions = {
     sessionStorage.removeItem("_token");
     await commit("SET_USER", null);
     await commit("SET_ACCESS_TOKEN", null);
+    await router.push({ name: "Home" });
   },
 
   async redirect({ state }) {

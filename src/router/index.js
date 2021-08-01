@@ -53,6 +53,13 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "patient" */ "../views/Patient.vue"),
   },
+
+  {
+    path: "/logout",
+    name: "Logout",
+    component: () =>
+      import(/* webpackChunkName: "logout" */ "../views/Logout.vue"),
+  },
 ];
 
 const router = new VueRouter({

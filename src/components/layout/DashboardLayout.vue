@@ -4,7 +4,8 @@
       <div class="d-flex align-center font-weight-bold">
         {{ headerTitle }}
       </div>
-      <v-spacer></v-spacer>
+      <v-spacer />
+      <LogoutButtonDialog />
     </v-app-bar>
 
     <v-main>
@@ -14,12 +15,16 @@
 </template>
 
 <script>
+import LogoutButtonDialog from "@/components/LogoutButtonDialog.vue";
 export default {
-  name: "DashboadrdLayout",
+  name: "DashboardLayout",
   props: {
     headerTitle: {
       type: String,
     },
+  },
+  components: {
+    LogoutButtonDialog,
   },
 };
 </script>
