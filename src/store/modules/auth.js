@@ -5,7 +5,7 @@ import { ROLES } from "../../constants";
 
 const state = () => ({
   accessToken: sessionStorage.getItem("_token"),
-  user: null,
+  user: JSON.parse(sessionStorage.getItem("_auth")),
 });
 
 const getters = {
@@ -20,6 +20,7 @@ const mutations = {
   },
 
   SET_USER(state, payload) {
+    sessionStorage.setItem("_auth", JSON.stringify(payload));
     state.user = payload;
   },
 };
@@ -36,6 +37,7 @@ const actions = {
     await commit("SET_ACCESS_TOKEN", `${data.token_type} ${data.access_token}`);
     axios.defaults.headers.common["Authorization"] = state.accessToken;
     const { isError: isErrorFetchUser } = await dispatch("fetchAuthUser");
+
     if (!isErrorLogin && !isErrorFetchUser) {
       router.push({ name: "Redirect" });
     } else {
@@ -52,12 +54,12 @@ const actions = {
   },
 
   async redirect({ state }) {
-    const [ADMIN, PHYSICIAN, ENCODER] = ROLES;
+    const [ADMIN, DOCTOR, STAFF] = ROLES;
     let roles = await state.user.attributes.roles;
 
-    if (roles == ADMIN) return router.push({ name: ADMIN });
-    if (roles == PHYSICIAN) return router.push({ name: PHYSICIAN });
-    if (roles == ENCODER) return router.push({ name: ENCODER });
+    if (roles == ADMIN) return router.push({ name: "admin.index.patient" });
+    if (roles == DOCTOR) return router.push({ name: "doctor.index.patient" });
+    if (roles == STAFF) return router.push({ name: "staff.index.patient" });
     return router.push({ name: "Home" });
   },
 };

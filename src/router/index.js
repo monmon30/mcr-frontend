@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import PatientIndex from "../views/PatientIndex.vue";
+import PatientCreate from "../views/PatientCreate.vue";
 
 Vue.use(VueRouter);
 
@@ -31,20 +33,56 @@ const routes = [
     name: "Admin",
     component: () =>
       import(/* webpackChunkName: "admin" */ "../views/Admin.vue"),
+    children: [
+      {
+        path: "index",
+        component: PatientIndex,
+        name: "admin.index.patient",
+      },
+      {
+        path: "create",
+        component: PatientCreate,
+        name: "admin.create.patient",
+      },
+    ],
   },
 
   {
-    path: "/dashboard/physician",
-    name: "Physician",
+    path: "/dashboard/doctor",
+    name: "Doctor",
     component: () =>
-      import(/* webpackChunkName: "physician" */ "../views/Physician.vue"),
+      import(/* webpackChunkName: "doctor" */ "../views/Doctor.vue"),
+    children: [
+      {
+        path: "index",
+        component: PatientIndex,
+        name: "doctor.index.patient",
+      },
+      {
+        path: "create",
+        component: PatientCreate,
+        name: "doctor.create.patient",
+      },
+    ],
   },
 
   {
-    path: "/dashboard/encoder",
-    name: "Encoder",
+    path: "/dashboard/staff",
+    name: "Staff",
     component: () =>
-      import(/* webpackChunkName: "encoder" */ "../views/Encoder.vue"),
+      import(/* webpackChunkName: "staff" */ "../views/Staff.vue"),
+    children: [
+      {
+        path: "index",
+        component: PatientIndex,
+        name: "staff.index.patient",
+      },
+      {
+        path: "create",
+        component: PatientCreate,
+        name: "staff.create.patient",
+      },
+    ],
   },
 
   {

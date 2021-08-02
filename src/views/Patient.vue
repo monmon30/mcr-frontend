@@ -7,7 +7,7 @@
 <script>
 import DashBoardLayout from "@/components/layout/DashboardLayout.vue";
 export default {
-  name: "Encoder",
+  name: "Staff",
   components: {
     DashBoardLayout,
   },

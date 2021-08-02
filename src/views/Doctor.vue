@@ -1,6 +1,6 @@
 <template>
   <DashBoardLayout
-    header-title="MEDICAL CLINIC RECORDS - ADMIN"
+    header-title="MEDICAL CLINIC RECORDS - DOCTOR"
     :nav-items="navItems"
   >
     <router-view :key="$route.fullPath" />
@@ -10,7 +10,7 @@
 <script>
 import DashBoardLayout from "@/components/layout/DashboardLayout.vue";
 export default {
-  name: "Admin",
+  name: "Doctor",
   components: {
     DashBoardLayout,
   },
@@ -19,12 +19,12 @@ export default {
       {
         name: "Patients",
         icon: "mdi-account-group",
-        link: { name: "admin.index.patient" },
+        link: { name: "doctor.index.patient" },
       },
       {
         name: "Add Patient",
         icon: "mdi-account-plus",
-        link: { name: "admin.create.patient" },
+        link: { name: "doctor.create.patient" },
       },
     ],
   }),

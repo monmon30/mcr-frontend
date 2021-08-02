@@ -20,6 +20,12 @@ export const useFetch = async url => {
   return { response, isError, data, loading };
 };
 
+/**
+ * @param {String} url
+ * @param {Object} form
+ * @returns Object Response
+ */
+
 export const usePost = async function (url, form) {
   let loading = false;
   let response = null;
