@@ -7,6 +7,20 @@ const state = () => ({
   patient: null,
   patientResponse: null,
   loading: null,
+
+  editId: null,
+  editForm: {
+    firstname: "",
+    middlename: "",
+    lastname: "",
+    suffix: "",
+    birthday: "",
+    sex: "",
+    address: "",
+    contact_number: "",
+    landline: "",
+    email: "",
+  },
 });
 
 const getters = {
@@ -15,9 +29,51 @@ const getters = {
   GET_PATIENT: state => state.patient,
   GET_PATIENT_RESPONSE: state => state.patientResponse,
   GET_LOADING: state => state.loading,
+
+  GET_EDIT_FIRSTNAME: state => state.editForm.firstname,
+  GET_EDIT_MIDDLENAME: state => state.editForm.middlename,
+  GET_EDIT_LASTNAME: state => state.editForm.lastname,
+  GET_EDIT_SUFFIX: state => state.editForm.suffix,
+  GET_EDIT_BIRTHDAY: state => state.editForm.birthday,
+  GET_EDIT_SEX: state => state.editForm.sex,
+  GET_EDIT_ADDRESS: state => state.editForm.address,
+  GET_EDIT_CONTACT_NUMBER: state => state.editForm.contact_number,
+  GET_EDIT_LANDLINE: state => state.editForm.landline,
+  GET_EDIT_EMAIL: state => state.editForm.email,
 };
 
 const mutations = {
+  SET_EDIT_FIRSTNAME(state, payload) {
+    state.editForm.firstname = payload;
+  },
+  SET_EDIT_MIDDLENAME(state, payload) {
+    state.editForm.middlename = payload;
+  },
+  SET_EDIT_LASTNAME(state, payload) {
+    state.editForm.lastname = payload;
+  },
+  SET_EDIT_SUFFIX(state, payload) {
+    state.editForm.suffix = payload;
+  },
+  SET_EDIT_BIRTHDAY(state, payload) {
+    state.editForm.birthday = payload;
+  },
+  SET_EDIT_SEX(state, payload) {
+    state.editForm.sex = payload;
+  },
+  SET_EDIT_ADDRESS(state, payload) {
+    state.editForm.address = payload;
+  },
+  SET_EDIT_CONTACT_NUMBER(state, payload) {
+    state.editForm.contact_number = payload;
+  },
+  SET_EDIT_LANDLINE(state, payload) {
+    state.editForm.landline = payload;
+  },
+  SET_EDIT_EMAIL(state, payload) {
+    state.editForm.email = payload;
+  },
+
   SET_ADDED_PATIENT(state, payload) {
     state.addedPatient = payload;
   },
@@ -36,6 +92,20 @@ const mutations = {
   SET_LOADING(state, payload) {
     state.loading = payload;
   },
+
+  SET_EDIT_FORM(state, item) {
+    state.editId = item.patient_id;
+    state.editForm.firstname = item.attributes.firstname;
+    state.editForm.middlename = item.attributes.middlename;
+    state.editForm.lastname = item.attributes.lastname;
+    state.editForm.suffix = item.attributes.suffix;
+    state.editForm.birthday = item.attributes.birthday;
+    state.editForm.sex = item.attributes.sex;
+    state.editForm.address = item.attributes.address;
+    state.editForm.contact_number = item.attributes.contact_number;
+    state.editForm.landline = item.attributes.landline;
+    state.editForm.email = item.attributes.email;
+  },
 };
 
 const actions = {
@@ -52,8 +122,8 @@ const actions = {
     await commit("SET_LOADING", loading);
   },
 
-  async updatePatient({ dispatch }, { form, id }) {
-    const { data } = await usePut(`/patients/${id}`, form);
+  async updatePatient({ state, dispatch }) {
+    const { data } = await usePut(`/patients/${state.editId}`, state.editForm);
     alert(`${data.data.attributes.fullname} has been updated.`);
     dispatch("fetchPatients");
   },
