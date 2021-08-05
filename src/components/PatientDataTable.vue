@@ -1,11 +1,12 @@
 <template>
   <FormLayout form-title="List of Patients" form-icon="mdi-account-group">
     <v-data-table
-      v-if="patients !== null"
+      v-if="loading === false"
       :headers="headers"
-      :items="patients.data.data"
-      :items-per-page="patients.data.meta.per_page"
+      :items="patients"
+      :items-per-page="patientResponse.data.meta.per_page"
       dense
+      :loading="loading"
     >
       <template v-slot:item.actions="{ item }">
         <v-row align="center" justify="center" dense>
@@ -153,32 +154,9 @@
       </FormLayout>
     </v-dialog>
 
-    <v-dialog v-model="dialog.delete" max-width="1000">
-      <FormLayout form-title="Delete Patient" form-icon="mdi-account-cancel">
-        <v-container v-if="deleteForm !== null" class="font-weight-bold">
-          Do you want to delete {{ deleteForm.data.attributes.fullname }} ?
-        </v-container>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            v-if="deleteForm !== null"
-            color="red"
-            dark
-            @click="
-              $store.dispatch(
-                'patient/deletePatient',
-                deleteForm.data.patient_id
-              )
-            "
-          >
-            DELETE
-          </v-btn>
-          <v-btn color="grey darken-3" @click="dialog.delete = false" dark>
-            CANCEL
-          </v-btn>
-        </v-card-actions>
-      </FormLayout>
-    </v-dialog>
+    <DialogLayout getter-val="GET_DIALOG_DELETE" setter-val="SET_DIALOG_DELETE">
+      <PatientDelete />
+    </DialogLayout>
   </FormLayout>
 </template>
 
@@ -190,6 +168,9 @@ import {
   emailFormatRequired,
 } from "@/validations";
 import FormLayout from "@/components/layout/FormLayout.vue";
+import DialogLayout from "@/components/layout/DialogLayout.vue";
+import PatientDelete from "@/components/PatientDelete.vue";
+
 export default {
   name: "PatientDataTable",
 
@@ -199,6 +180,8 @@ export default {
 
   components: {
     FormLayout,
+    DialogLayout,
+    PatientDelete,
   },
   data: () => ({
     sex: [
@@ -265,8 +248,9 @@ export default {
     },
 
     setDeleteData(item) {
-      this.dialog.delete = true;
-      this.deleteForm = item;
+      const { commit, dispatch } = this.$store;
+      commit("patient/SET_PATIENT", item);
+      dispatch("global/openDialog", "SET_DIALOG_DELETE");
     },
 
     clearFields() {
@@ -284,6 +268,8 @@ export default {
   computed: {
     ...mapGetters({
       patients: "patient/GET_PATIENTS",
+      patientResponse: "patient/GET_PATIENT_RESPONSE",
+      loading: "patient/GET_LOADING",
     }),
   },
 };
