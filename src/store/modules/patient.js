@@ -1,7 +1,4 @@
-import { usePost, useFetch } from "../../custom_hooks";
-// import axios from "axios";
-// import router from "../../router";
-// import { ROLES } from "../../constants";
+import { usePost, useFetch, usePut, useDelete } from "../../custom_hooks";
 
 const state = () => ({
   addedPatient: null,
@@ -32,6 +29,17 @@ const actions = {
   async fetchPatients({ commit }) {
     const { response } = await useFetch("/patients");
     await commit("SET_PATIENTS", response);
+  },
+
+  async updatePatient({ dispatch }, { form, id }) {
+    const { data } = await usePut(`/patients/${id}`, form);
+    alert(`${data.data.attributes.fullname} has been updated.`);
+    dispatch("fetchPatients");
+  },
+
+  async deletePatient(_, id) {
+    const { data } = await useDelete(`/patients/${id}`);
+    console.log(data);
   },
 };
 
