@@ -26,6 +26,11 @@ export default {
         icon: "mdi-account-plus",
         link: { name: "admin.create.patient" },
       },
+      {
+        name: "Appointments",
+        icon: "mdi-account-multiple-check",
+        link: { name: "admin.index.appointment" },
+      },
     ],
   }),
 };

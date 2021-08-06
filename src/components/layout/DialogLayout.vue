@@ -14,11 +14,11 @@ export default {
   props: {
     getterVal: {
       type: String,
-      require: true,
+      required: true,
     },
     setterVal: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   computed: {

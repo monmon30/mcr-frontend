@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import PatientIndex from "../views/PatientIndex.vue";
 import PatientCreate from "../views/PatientCreate.vue";
+import Appointment from "../views/Appointment.vue";
 
 Vue.use(VueRouter);
 
@@ -44,6 +45,11 @@ const routes = [
         component: PatientCreate,
         name: "admin.create.patient",
       },
+      {
+        path: "appointments",
+        component: Appointment,
+        name: "admin.index.appointment",
+      },
     ],
   },
 
@@ -62,6 +68,11 @@ const routes = [
         path: "create",
         component: PatientCreate,
         name: "doctor.create.patient",
+      },
+      {
+        path: "appointments",
+        component: Appointment,
+        name: "doctor.index.appointment",
       },
     ],
   },

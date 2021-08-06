@@ -2,6 +2,7 @@
 
 const state = () => ({
   dialog: {
+    create: false,
     edit: false,
     delete: false,
   },
@@ -10,6 +11,7 @@ const state = () => ({
 const getters = {
   GET_DIALOG_EDIT: state => state.dialog.edit,
   GET_DIALOG_DELETE: state => state.dialog.delete,
+  GET_DIALOG_CREATE: state => state.dialog.create,
 };
 
 const mutations = {
@@ -18,6 +20,9 @@ const mutations = {
   },
   SET_DIALOG_DELETE(state, payload) {
     state.dialog.delete = payload;
+  },
+  SET_DIALOG_CREATE(state, payload) {
+    state.dialog.create = payload;
   },
 };
 

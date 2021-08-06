@@ -79,7 +79,7 @@
       </v-row>
 
       <v-row align="center" justify="center" dense>
-        <v-col sm="12" md="4">
+        <v-col>
           <v-text-field
             v-model="contact_number"
             label="Contact Number"
@@ -89,11 +89,13 @@
           />
         </v-col>
 
-        <v-col sm="12" md="4">
+        <v-col>
           <v-text-field v-model="landline" label="Landline" outlined dense />
         </v-col>
+      </v-row>
 
-        <v-col sm="12" md="4">
+      <v-row align="center" justify="center" dense>
+        <v-col>
           <v-text-field
             v-model="email"
             label="Email Address"
@@ -102,6 +104,15 @@
             :rules="[rules.fieldRequired, rules.emailFormatRequired]"
           />
         </v-col>
+        <!-- <v-col>
+          <v-text-field
+            label="Password"
+            type="password"
+            outlined
+            dense
+            :rules="[rules.fieldRequired]"
+          />
+        </v-col> -->
       </v-row>
 
       <v-card-actions>

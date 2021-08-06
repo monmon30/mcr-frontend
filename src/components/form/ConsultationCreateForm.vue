@@ -1,15 +1,19 @@
 <template>
-  <FormLayout form-title="Add Patient">
+  <FormLayout
+    :form-title="`Consult ${patient.attributes.patient_name}`"
+    form-icon="mdi-account-check"
+  >
     <v-form
-      @submit.prevent="submitPatient"
+      @submit.prevent="submitConsultation"
       v-model="valid"
-      ref="patientCreateForm"
+      ref="consultationCreateForm"
     >
       <v-row align="center" justify="center" dense>
         <v-col sm="12" md="3">
           <v-text-field
-            v-model="form.firstname"
-            label="Firstname"
+            v-model="form.weight"
+            label="Weight"
+            type="number"
             outlined
             dense
             lazy-validation
@@ -18,50 +22,34 @@
         </v-col>
         <v-col sm="12" md="3">
           <v-text-field
-            v-model="form.middlename"
-            label="Middlename"
+            v-model="form.height"
+            label="Height"
+            type="number"
             outlined
             dense
+            lazy-validation
             :rules="[rules.fieldRequired, rules.fieldMinimum]"
           />
         </v-col>
         <v-col sm="12" md="3">
           <v-text-field
-            v-model="form.lastname"
-            label="Lastname"
+            v-model="form.temperature"
+            label="Temperature"
+            type="number"
             outlined
             dense
+            lazy-validation
             :rules="[rules.fieldRequired, rules.fieldMinimum]"
           />
         </v-col>
         <v-col sm="12" md="3">
-          <v-text-field v-model="form.suffix" label="Suffix" outlined dense />
-        </v-col>
-      </v-row>
-
-      <v-row align="center" justify="center" dense>
-        <v-col sm="12" md="6">
           <v-text-field
-            v-model="form.birthday"
-            label="Birthday"
-            type="date"
+            v-model="form.blood_pressure"
+            label="Blood Pressure"
             outlined
             dense
-            :rules="[rules.fieldRequired]"
-          />
-        </v-col>
-
-        <v-col sm="12" md="6">
-          <v-select
-            label="Sex"
-            v-model="form.sex"
-            :items="sex"
-            item-value="value"
-            item-text="desc"
-            type="date"
-            outlined
-            dense
-            :rules="[rules.fieldRequired]"
+            lazy-validation
+            :rules="[rules.fieldRequired, rules.fieldMinimum]"
           />
         </v-col>
       </v-row>
@@ -69,8 +57,8 @@
       <v-row align="center" justify="center" dense>
         <v-col sm="12">
           <v-textarea
-            label="Address"
-            v-model="form.address"
+            v-model="form.findings"
+            label="Findings"
             outlined
             dense
             :rules="[rules.fieldRequired, rules.fieldMinimum]"
@@ -79,44 +67,25 @@
       </v-row>
 
       <v-row align="center" justify="center" dense>
-        <v-col>
-          <v-text-field
-            v-model="form.contact_number"
-            label="Contact Number"
+        <v-col sm="12">
+          <v-textarea
+            v-model="form.prescription"
+            label="Prescription"
             outlined
             dense
-            :rules="[rules.fieldRequired]"
-          />
-        </v-col>
-
-        <v-col>
-          <v-text-field
-            v-model="form.landline"
-            label="Landline"
-            outlined
-            dense
+            :rules="[rules.fieldRequired, rules.fieldMinimum]"
           />
         </v-col>
       </v-row>
 
       <v-row align="center" justify="center" dense>
-        <v-col>
-          <v-text-field
-            v-model="form.email"
-            label="Email Address"
+        <v-col sm="12">
+          <v-textarea
+            v-model="form.recommendation"
+            label="Recommendation"
             outlined
             dense
-            :rules="[rules.fieldRequired, rules.emailFormatRequired]"
-          />
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="form.password"
-            label="Password"
-            type="password"
-            outlined
-            dense
-            :rules="[rules.fieldRequired]"
+            :rules="[rules.fieldRequired, rules.fieldMinimum]"
           />
         </v-col>
       </v-row>
@@ -141,9 +110,10 @@ import {
   fieldMinimum,
   emailFormatRequired,
 } from "@/validations";
+import { mapGetters } from "vuex";
 
 export default {
-  name: "PatientCreateForm",
+  name: "ConsultationCreateForm",
   components: {
     FormLayout,
   },
@@ -155,17 +125,13 @@ export default {
     },
     valid: true,
     form: {
-      firstname: "",
-      middlename: "",
-      lastname: "",
-      suffix: "",
-      birthday: "",
-      sex: "",
-      address: "",
-      contact_number: "",
-      landline: "",
-      email: "",
-      password: "",
+      findings: "",
+      prescription: "",
+      recommendation: "",
+      weight: null,
+      height: null,
+      temperature: null,
+      blood_pressure: null,
     },
     sex: [
       { value: "F", desc: "Female" },
@@ -174,14 +140,22 @@ export default {
   }),
 
   methods: {
-    async submitPatient() {
-      await this.$store.dispatch("patient/createPatient", this.form);
-      this.clearFields();
+    async submitConsultation() {
+      await this.$store.dispatch("consultation/createConsultation", {
+        form: this.form,
+        patientId: this.patient.attributes.patient_id,
+      });
     },
 
     clearFields() {
-      this.$refs.patientCreateForm.reset();
+      this.$refs.consultationCreateForm.reset();
     },
+  },
+
+  computed: {
+    ...mapGetters({
+      patient: "consultation/GET_PATIENT_DATA",
+    }),
   },
 };
 </script>
