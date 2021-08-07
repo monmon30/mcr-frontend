@@ -1,0 +1,10 @@
+login accounts: 
+email
+    admin@test.com
+    doctor@test.com
+    staff@test.com
+    patient@test.com
+
+links
+for admin, doctor and staff:    http://157.245.200.78/
+for patient login:              http://157.245.200.78/patient/auth
