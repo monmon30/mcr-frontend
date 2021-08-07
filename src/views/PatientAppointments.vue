@@ -38,6 +38,9 @@ import PatientDelete from "@/components/PatientDelete.vue";
 import PatientConsultations from "@/components/PatientConsultations.vue";
 export default {
   name: "PatientAppointments",
+  mounted() {
+    this.$store.dispatch("patient/fetchPatientAppointment");
+  },
   components: {
     FormLayout,
     DialogLayout,

@@ -2,7 +2,13 @@
   <v-app>
     <v-app-bar app color="blue" dark fixed>
       <div class="d-flex align-center font-weight-bold">
-        {{ headerTitle }}
+        <v-img
+          width="50"
+          height="50"
+          class="rounded-circle mr-3"
+          src="@/assets/img/pateros.png"
+        />
+        MEDICAL CLINIC RECORDS OF BARANGAY SAN ROQUE, PATEROS
       </div>
       <v-spacer />
       <v-btn icon dark title="Logout">

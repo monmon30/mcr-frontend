@@ -10,6 +10,7 @@ const state = () => ({
   loading: null,
 
   authPatient: JSON.parse(sessionStorage.getItem("_authPatient")),
+  authPatientAppointments: null,
   appointmentConsultation: null,
 
   editId: null,
@@ -46,7 +47,7 @@ const getters = {
   GET_EDIT_EMAIL: state => state.editForm.email,
 
   GET_AUTH_PATIENT: state => state.authPatient,
-  GET_AUTH_APPOINTMENTS: state => state.authPatient.data.appointments,
+  GET_AUTH_APPOINTMENTS: state => state.authPatientAppointments,
   GET_AUTH_CONSULTATIONS: state => state.authPatient.data.consultations,
   GET_APPOINTMENT_CONSULTATION: state => state.appointmentConsultation,
 };
@@ -121,6 +122,10 @@ const mutations = {
     state.authPatient = payload;
   },
 
+  SET_AUTH_APPOINTMENTS(state, payload) {
+    state.authPatientAppointments = payload;
+  },
+
   SET_APPOINTMENT_CONSULTATION(state, appointmentId) {
     console.log(state.authPatient.data.consultations.data);
     const newArr = state.authPatient.data.consultations.data.filter(consult => {
@@ -162,6 +167,7 @@ const actions = {
   async login({ commit }, form) {
     const { data, isError } = await usePost("/patients/auth/login", form);
     await commit("SET_AUTH_PATIENT", data);
+    await commit("SET_AUTH_APPOINTMENTS", data.data.appointments);
     if (!isError) {
       router.push({ name: "patient.profile" });
     } else {
@@ -183,6 +189,14 @@ const actions = {
       form
     );
     commit("SET_LOADING", loading);
+  },
+
+  async fetchPatientAppointment({ state, commit }) {
+    const { data } = await useFetch(
+      `/patients/${state.authPatient.data.patient_id}/appointments`
+    );
+    console.log(data);
+    commit("SET_AUTH_APPOINTMENTS", data.appointments);
   },
 };
 
