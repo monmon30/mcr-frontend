@@ -51,7 +51,6 @@ export default {
     headers: [
       {
         text: "Schedule",
-        align: "start",
         sortable: false,
         value: "data.attributes.schedule",
       },

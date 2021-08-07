@@ -81,7 +81,6 @@ export default {
         value: "data.attributes.contact_number",
         sortable: false,
       },
-      { text: "Sex", value: "data.attributes.sex", sortable: false },
       { text: "Actions", value: "actions" },
     ],
   }),
