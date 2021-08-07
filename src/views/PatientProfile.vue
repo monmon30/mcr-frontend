@@ -7,7 +7,7 @@
       outlined
     />
     <v-row>
-      <v-col sm="12" md="3">
+      <v-col cols="12" md="3">
         <v-text-field
           readonly
           label="Birthday"
@@ -15,7 +15,7 @@
           outlined
         />
       </v-col>
-      <v-col sm="12" md="3">
+      <v-col cols="12" md="3">
         <v-text-field
           readonly
           label="Email"
@@ -23,7 +23,7 @@
           outlined
         />
       </v-col>
-      <v-col sm="12" md="3">
+      <v-col cols="12" md="3">
         <v-text-field
           readonly
           label="Contact Number"
@@ -31,7 +31,7 @@
           outlined
         />
       </v-col>
-      <v-col sm="12" md="3">
+      <v-col cols="12" md="3">
         <v-text-field
           readonly
           label="Landline"
