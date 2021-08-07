@@ -11,19 +11,27 @@
       <template v-slot:item.actions="{ item }">
         <v-row align="center" justify="center" dense>
           <v-col sm="12" md="4">
-            <v-btn color="green" dark small @click="setEditData(item)">
+            <v-btn color="blue" block small dark @click="setViewData(item)">
+              VIEW PROFILE
+            </v-btn>
+          </v-col>
+          <v-col sm="12" md="4">
+            <v-btn color="green" block small dark @click="setEditData(item)">
               EDIT
             </v-btn>
           </v-col>
           <v-col sm="12" md="4">
-            <v-btn color="red" dark small @click="setDeleteData(item)">
+            <v-btn color="red" block small dark @click="setDeleteData(item)">
               DELETE
             </v-btn>
           </v-col>
-          <v-spacer></v-spacer>
         </v-row>
       </template>
     </v-data-table>
+
+    <DialogLayout getter-val="GET_DIALOG_VIEW" setter-val="SET_DIALOG_VIEW">
+      <PatientViewDataLayout />
+    </DialogLayout>
 
     <DialogLayout getter-val="GET_DIALOG_EDIT" setter-val="SET_DIALOG_EDIT">
       <PatientEditForm />
@@ -40,6 +48,8 @@ import { mapGetters } from "vuex";
 
 import FormLayout from "@/components/layout/FormLayout.vue";
 import DialogLayout from "@/components/layout/DialogLayout.vue";
+import PatientViewDataLayout from "@/components/layout/PatientViewDataLayout.vue";
+
 import PatientDelete from "@/components/PatientDelete.vue";
 import PatientEditForm from "@/components/form/PatientEditForm.vue";
 
@@ -55,6 +65,7 @@ export default {
     DialogLayout,
     PatientDelete,
     PatientEditForm,
+    PatientViewDataLayout,
   },
   data: () => ({
     headers: [
@@ -76,6 +87,12 @@ export default {
   }),
 
   methods: {
+    setViewData(item) {
+      const { commit, dispatch } = this.$store;
+      commit("patient/SET_PATIENT", item);
+      dispatch("global/openDialog", "SET_DIALOG_VIEW");
+    },
+
     setEditData(item) {
       const { commit, dispatch } = this.$store;
       commit("patient/SET_EDIT_FORM", item.data);
