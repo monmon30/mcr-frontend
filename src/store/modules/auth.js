@@ -41,7 +41,7 @@ const actions = {
     if (!isErrorLogin && !isErrorFetchUser) {
       router.push({ name: "Redirect" });
     } else {
-      throw "Invalid Credentials";
+      alert("Invalid Credentials");
     }
   },
 

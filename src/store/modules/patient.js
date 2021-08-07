@@ -164,6 +164,8 @@ const actions = {
     await commit("SET_AUTH_PATIENT", data);
     if (!isError) {
       router.push({ name: "patient.profile" });
+    } else {
+      alert("Invalid Credentials");
     }
   },
 
