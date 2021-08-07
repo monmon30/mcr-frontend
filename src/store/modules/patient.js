@@ -1,5 +1,6 @@
 import { usePost, useFetch, usePut, useDelete } from "../../custom_hooks";
 import store from "../../store";
+import router from "../../router";
 
 const state = () => ({
   addedPatient: null,
@@ -7,6 +8,9 @@ const state = () => ({
   patient: null,
   patientResponse: null,
   loading: null,
+
+  authPatient: JSON.parse(sessionStorage.getItem("_authPatient")),
+  appointmentConsultation: null,
 
   editId: null,
   editForm: {
@@ -40,6 +44,11 @@ const getters = {
   GET_EDIT_CONTACT_NUMBER: state => state.editForm.contact_number,
   GET_EDIT_LANDLINE: state => state.editForm.landline,
   GET_EDIT_EMAIL: state => state.editForm.email,
+
+  GET_AUTH_PATIENT: state => state.authPatient,
+  GET_AUTH_APPOINTMENTS: state => state.authPatient.data.appointments,
+  GET_AUTH_CONSULTATIONS: state => state.authPatient.data.consultations,
+  GET_APPOINTMENT_CONSULTATION: state => state.appointmentConsultation,
 };
 
 const mutations = {
@@ -106,6 +115,19 @@ const mutations = {
     state.editForm.landline = item.attributes.landline;
     state.editForm.email = item.attributes.email;
   },
+
+  SET_AUTH_PATIENT(state, payload) {
+    sessionStorage.setItem("_authPatient", JSON.stringify(payload));
+    state.authPatient = payload;
+  },
+
+  SET_APPOINTMENT_CONSULTATION(state, appointmentId) {
+    console.log(state.authPatient.data.consultations.data);
+    const newArr = state.authPatient.data.consultations.data.filter(consult => {
+      return consult.data.attributes.appointment_id === appointmentId;
+    });
+    state.appointmentConsultation = newArr;
+  },
 };
 
 const actions = {
@@ -135,6 +157,30 @@ const actions = {
       patient => id !== patient.data.patient_id
     );
     commit("SET_PATIENTS", filteredPatients);
+  },
+
+  async login({ commit }, form) {
+    const { data, isError } = await usePost("/patients/auth/login", form);
+    await commit("SET_AUTH_PATIENT", data);
+    if (!isError) {
+      router.push({ name: "patient.profile" });
+    }
+  },
+
+  logout({ commit }) {
+    sessionStorage.removeItem("_authPatient");
+    commit("SET_AUTH_PATIENT", null);
+    router.push({ name: "patient.login" });
+  },
+
+  async createAppointment({ state, commit }, form) {
+    commit("SET_LOADING", true);
+
+    const { loading } = await usePost(
+      `/patients/${state.authPatient.data.patient_id}/appointments`,
+      form
+    );
+    commit("SET_LOADING", loading);
   },
 };
 

@@ -68,6 +68,11 @@ export default {
           value: "data.attributes.schedule",
           sortable: false,
         },
+        {
+          text: "Reason",
+          value: "data.attributes.reason",
+          sortable: false,
+        },
 
         {
           text: "Action",

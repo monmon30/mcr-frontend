@@ -4,6 +4,9 @@ import Home from "../views/Home.vue";
 import PatientIndex from "../views/PatientIndex.vue";
 import PatientCreate from "../views/PatientCreate.vue";
 import Appointment from "../views/Appointment.vue";
+import PatientProfile from "../views/PatientProfile.vue";
+import PatientAppointmentCreate from "../views/PatientAppointmentCreate.vue";
+import PatientAppointments from "../views/PatientAppointments.vue";
 
 Vue.use(VueRouter);
 
@@ -14,13 +17,12 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/patient/auth",
+    name: "patient.login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      import(
+        /* webpackChunkName: "patient/auth" */ "../views/PatientLogin.vue"
+      ),
   },
   {
     path: "/redirect",
@@ -101,6 +103,23 @@ const routes = [
     name: "Patient",
     component: () =>
       import(/* webpackChunkName: "patient" */ "../views/Patient.vue"),
+    children: [
+      {
+        path: "profile",
+        component: PatientProfile,
+        name: "patient.profile",
+      },
+      {
+        path: "appointment/create",
+        component: PatientAppointmentCreate,
+        name: "patient.create.appointment",
+      },
+      {
+        path: "appointment/",
+        component: PatientAppointments,
+        name: "patient.index.appointment",
+      },
+    ],
   },
 
   {

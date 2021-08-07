@@ -1,7 +1,7 @@
 import { useFetch, usePost } from "../../custom_hooks";
+import { ROLES } from "../../constants";
 import axios from "axios";
 import router from "../../router";
-import { ROLES } from "../../constants";
 
 const state = () => ({
   accessToken: sessionStorage.getItem("_token"),

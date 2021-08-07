@@ -125,6 +125,7 @@ export default {
     },
     valid: true,
     form: {
+      appointment_id: "",
       findings: "",
       prescription: "",
       recommendation: "",
@@ -144,7 +145,15 @@ export default {
       await this.$store.dispatch("consultation/createConsultation", {
         form: this.form,
         patientId: this.patient.attributes.patient_id,
+        appointmentId: this.patient.appointment_id,
       });
+
+      await this.$store.dispatch("consultation/markAppointmentDone", {
+        patientId: this.patient.attributes.patient_id,
+        appointmentId: this.patient.appointment_id,
+      });
+
+      await this.$store.dispatch("appointment/fetchAppointments");
     },
 
     clearFields() {

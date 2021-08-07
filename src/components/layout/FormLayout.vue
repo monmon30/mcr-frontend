@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="10">
+  <v-card elevation="formElevation">
     <v-card-title>
       <v-icon left>
         {{ formIcon }}
@@ -21,6 +21,10 @@ export default {
     },
     formIcon: {
       type: String,
+    },
+    formElevation: {
+      type: [String, Number],
+      default: 10,
     },
   },
 };

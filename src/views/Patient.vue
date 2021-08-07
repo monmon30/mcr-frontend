@@ -1,15 +1,38 @@
 <template>
-  <DashBoardLayout header-title="MEDICAL CLINIC RECORDS - PATIENT">
+  <PatientDashBoardLayout
+    header-title="MEDICAL CLINIC RECORDS - PATIENT"
+    :nav-items="headers"
+  >
     <router-view :key="$route.fullPath" />
-  </DashBoardLayout>
+  </PatientDashBoardLayout>
 </template>
 
 <script>
-import DashBoardLayout from "@/components/layout/DashboardLayout.vue";
+import PatientDashBoardLayout from "@/components/layout/PatientDashboardLayout.vue";
 export default {
-  name: "Staff",
+  name: "Patient",
   components: {
-    DashBoardLayout,
+    PatientDashBoardLayout,
   },
+  data: () => ({
+    headers: [
+      {
+        name: "Patient Profile",
+        icon: "mdi-account-group",
+        link: { name: "patient.profile" },
+      },
+      {
+        name: "Create Appointment",
+        icon: "mdi-account-box",
+        link: { name: "patient.create.appointment" },
+      },
+
+      {
+        name: "Appointment",
+        icon: "mdi-account-box-multiple",
+        link: { name: "patient.index.appointment" },
+      },
+    ],
+  }),
 };
 </script>
