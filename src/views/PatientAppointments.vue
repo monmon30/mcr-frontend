@@ -39,7 +39,7 @@ import PatientConsultations from "@/components/PatientConsultations.vue";
 export default {
   name: "PatientAppointments",
   mounted() {
-    this.$store.dispatch("patient/fetchPatientAppointment");
+    this.$store.dispatch("patient/fetchAppointments");
   },
   components: {
     FormLayout,
