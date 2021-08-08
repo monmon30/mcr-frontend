@@ -1,6 +1,7 @@
 <template>
   <FormLayout form-title="List of Appointments" form-icon="mdi-account-group">
     <v-data-table
+      v-if="appointments !== null"
       :headers="headers"
       :items="appointments.data"
       dense
@@ -39,7 +40,8 @@ import PatientConsultations from "@/components/PatientConsultations.vue";
 export default {
   name: "PatientAppointments",
   mounted() {
-    this.$store.dispatch("patient/fetchAppointments");
+    // this.$store.dispatch("patient/fetchAppointments");
+    this.$store.dispatch("patient/fetchPatientAppointment");
   },
   components: {
     FormLayout,
@@ -61,10 +63,14 @@ export default {
 
   methods: {
     setConsultationData(item) {
-      console.log(item);
+      console.log(item, "consult", item.data.appointment_id);
       const { dispatch, commit } = this.$store;
       commit("patient/SET_APPOINTMENT_CONSULTATION", item.data.appointment_id);
       dispatch("global/openDialog", "SET_DIALOG_EDIT");
+      dispatch(
+        "patient/fetchAuthPatientAppointmentConsultations",
+        item.data.appointment_id
+      );
     },
 
     setDeleteData(item) {

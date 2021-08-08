@@ -154,6 +154,8 @@ export default {
       });
 
       await this.$store.dispatch("appointment/fetchAppointments");
+      alert("Consultation has been added!");
+      await this.$store.commit("global/SET_DIALOG_CREATE", false);
     },
 
     clearFields() {

@@ -1,7 +1,7 @@
 <template>
   <FormLayout form-title="Consultations">
-    <div v-if="consultations.length == 0">No consultation data!</div>
-    <Consultations else :consultations="consultations" />
+    <div v-if="consultations.length == 0">No consultations yet.</div>
+    <Consultations v-else :consultations="consultations" />
   </FormLayout>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      consultations: "patient/GET_APPOINTMENT_CONSULTATION",
+      consultations: "patient/GET_APPOINTMENT_CONSULTATIONS",
     }),
   },
 };

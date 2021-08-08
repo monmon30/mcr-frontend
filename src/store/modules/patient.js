@@ -12,6 +12,7 @@ const state = () => ({
   authPatient: JSON.parse(sessionStorage.getItem("_authPatient")),
   authPatientAppointments: null,
   appointmentConsultation: null,
+  appointmentConsultations: null,
 
   editId: null,
   editForm: {
@@ -50,6 +51,7 @@ const getters = {
   GET_AUTH_APPOINTMENTS: state => state.authPatientAppointments,
   GET_AUTH_CONSULTATIONS: state => state.authPatient.data.consultations,
   GET_APPOINTMENT_CONSULTATION: state => state.appointmentConsultation,
+  GET_APPOINTMENT_CONSULTATIONS: state => state.appointmentConsultations,
 };
 
 const mutations = {
@@ -133,6 +135,10 @@ const mutations = {
     });
     state.appointmentConsultation = newArr;
   },
+
+  SET_APPOINTMENT_CONSULTATIONS(state, payload) {
+    state.appointmentConsultations = payload;
+  },
 };
 
 const actions = {
@@ -195,6 +201,16 @@ const actions = {
     );
     console.log(data);
     commit("SET_AUTH_APPOINTMENTS", data.appointments);
+  },
+
+  async fetchAuthPatientAppointmentConsultations(
+    { state, commit },
+    appointmentId
+  ) {
+    const { data } = await useFetch(
+      `/appointments/${appointmentId}/patients/${state.authPatient.data.patient_id}`
+    );
+    commit("SET_APPOINTMENT_CONSULTATIONS", data);
   },
 };
 
