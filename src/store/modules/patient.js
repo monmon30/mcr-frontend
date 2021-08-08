@@ -170,8 +170,6 @@ const actions = {
     await commit("SET_AUTH_APPOINTMENTS", data.data.appointments);
     if (!isError) {
       router.push({ name: "patient.profile" });
-    } else {
-      alert("Invalid Credentials");
     }
   },
 
