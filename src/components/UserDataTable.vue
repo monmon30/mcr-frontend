@@ -20,7 +20,15 @@
     <template v-slot:[`item.actions`]="{ item }">
       <v-row align="center" justify="center" dense>
         <v-col sm="12" md="6">
-          <v-btn dark color="green lighten-1" small block> update </v-btn>
+          <v-btn
+            dark
+            color="green lighten-1"
+            small
+            block
+            @click="setEditData(item)"
+          >
+            update
+          </v-btn>
         </v-col>
 
         <v-col sm="12" md="6">
@@ -58,6 +66,12 @@ export default {
     ...mapActions({
       openDialog: "global/openDialog",
     }),
+
+    setEditData(item) {
+      const { commit, dispatch } = this.$store;
+      commit("user/SET_EDIT_FORM", item);
+      dispatch("global/openDialog", "SET_DIALOG_EDIT");
+    },
   },
 
   computed: {
