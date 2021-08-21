@@ -31,6 +31,11 @@ export default {
         icon: "mdi-account-multiple-check",
         link: { name: "admin.index.appointment" },
       },
+      {
+        name: "Users",
+        icon: "mdi-account",
+        link: { name: "user" },
+      },
     ],
   }),
 };

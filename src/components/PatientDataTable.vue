@@ -8,7 +8,7 @@
       dense
       :loading="loading"
     >
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-row align="center" justify="center" dense>
           <v-col sm="12" md="4">
             <v-btn color="blue" block small dark @click="setViewData(item)">

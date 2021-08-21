@@ -7,6 +7,7 @@ import Appointment from "../views/Appointment.vue";
 import PatientProfile from "../views/PatientProfile.vue";
 import PatientAppointmentCreate from "../views/PatientAppointmentCreate.vue";
 import PatientAppointments from "../views/PatientAppointments.vue";
+import User from "../views/User.vue";
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,11 @@ const routes = [
         path: "appointments",
         component: Appointment,
         name: "admin.index.appointment",
+      },
+      {
+        path: "users",
+        component: User,
+        name: "user",
       },
     ],
   },

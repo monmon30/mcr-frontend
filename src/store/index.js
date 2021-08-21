@@ -5,6 +5,7 @@ import patient from "./modules/patient";
 import global from "./modules/global";
 import appointment from "./modules/appointment";
 import consultation from "./modules/consultation";
+import user from "./modules/user";
 
 Vue.use(Vuex);
 
@@ -15,5 +16,6 @@ export default new Vuex.Store({
     consultation,
     global,
     patient,
+    user,
   },
 });
