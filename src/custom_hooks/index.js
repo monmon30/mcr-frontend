@@ -13,7 +13,6 @@ export const useFetch = async url => {
   } catch (e) {
     isError = true;
     console.error(e);
-    throw e;
   } finally {
     loading = false;
   }
@@ -40,7 +39,6 @@ export const usePost = async function (url, form) {
   } catch (e) {
     isError = true;
     console.error(e);
-    throw e;
   } finally {
     loading = false;
   }
@@ -61,7 +59,6 @@ export const usePut = async function (url, form) {
   } catch (e) {
     isError = true;
     console.error(e);
-    throw e;
   } finally {
     loading = false;
   }
@@ -82,7 +79,6 @@ export const useDelete = async function (url) {
   } catch (e) {
     isError = true;
     console.error(e);
-    throw e;
   } finally {
     loading = false;
   }

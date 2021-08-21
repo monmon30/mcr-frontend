@@ -1,5 +1,5 @@
-import { useFetch, usePost, usePut } from "../../custom_hooks";
-// import store from "../../store";
+import { useDelete, useFetch, usePost, usePut } from "../../custom_hooks";
+import store from "../../store";
 
 const state = () => ({
   users: [],
@@ -13,6 +13,7 @@ const state = () => ({
     roles: null,
     birthday: null,
   },
+  deleteUserData: null,
 });
 
 const getters = {
@@ -25,6 +26,8 @@ const getters = {
   GET_EDIT_EMAIL: state => state.editForm.email,
   GET_EDIT_ROLES: state => state.editForm.roles,
   GET_EDIT_BIRTHDAY: state => state.editForm.birthday,
+
+  GET_DELETE_USER_DATA: state => state.deleteUserData,
 };
 
 const mutations = {
@@ -46,6 +49,16 @@ const mutations = {
     state.editForm.birthday = item.data.attributes.birthday;
   },
 
+  UNSET_EDIT_FORM(state) {
+    state.editId = null;
+    state.editForm.firstname = null;
+    state.editForm.middlename = null;
+    state.editForm.lastname = null;
+    state.editForm.email = null;
+    state.editForm.roles = null;
+    state.editForm.birthday = null;
+  },
+
   SET_EDIT_FIRSTNAME(state, payload) {
     state.editForm.firstname = payload;
   },
@@ -63,6 +76,10 @@ const mutations = {
   },
   SET_EDIT_ROLES(state, payload) {
     state.editForm.roles = payload;
+  },
+
+  SET_DELETE_USER_DATA(state, payload) {
+    state.deleteUserData = payload;
   },
 };
 
@@ -92,6 +109,20 @@ const actions = {
       user => user.data.user_id == state.editId
     );
     Object.assign(state.users[index], data);
+  },
+
+  async deleteUser({ commit, state }) {
+    commit("SET_LOADING", true);
+    const { loading, isError } = await useDelete(
+      `/users/${state.deleteUserData.data.user_id}`
+    );
+    commit("SET_LOADING", loading);
+    const newArr = state.users.filter(user => user !== state.deleteUserData);
+    commit("SET_USERS", newArr);
+    if (isError) {
+      alert("Failed to delete user!");
+    }
+    store.commit("global/SET_DIALOG_DELETE", false);
   },
 };
 

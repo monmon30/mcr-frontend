@@ -127,5 +127,9 @@ export default {
     roles: getSet("user", "GET_EDIT_ROLES", "SET_EDIT_ROLES"),
     birthday: getSet("user", "GET_EDIT_BIRTHDAY", "SET_EDIT_BIRTHDAY"),
   },
+
+  destroyed() {
+    this.$store.commit("user/UNSET_EDIT_FORM");
+  },
 };
 </script>

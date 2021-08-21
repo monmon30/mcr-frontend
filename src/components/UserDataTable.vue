@@ -32,7 +32,15 @@
         </v-col>
 
         <v-col sm="12" md="6">
-          <v-btn dark color="red lighten-1" small block> delete </v-btn>
+          <v-btn
+            dark
+            color="red lighten-1"
+            small
+            block
+            @click="setDeleteData(item)"
+          >
+            delete
+          </v-btn>
         </v-col>
       </v-row>
     </template>
@@ -71,6 +79,12 @@ export default {
       const { commit, dispatch } = this.$store;
       commit("user/SET_EDIT_FORM", item);
       dispatch("global/openDialog", "SET_DIALOG_EDIT");
+    },
+
+    setDeleteData(item) {
+      const { commit, dispatch } = this.$store;
+      commit("user/SET_DELETE_USER_DATA", item);
+      dispatch("global/openDialog", "SET_DIALOG_DELETE");
     },
   },
 
