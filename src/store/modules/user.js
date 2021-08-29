@@ -3,6 +3,7 @@ import store from "../../store";
 
 const state = () => ({
   users: [],
+  user: null,
   loading: false,
   editId: null,
   editForm: {
@@ -18,6 +19,8 @@ const state = () => ({
 
 const getters = {
   GET_USERS: state => state.users,
+  GET_USER: state => state.user,
+
   GET_LOADING: state => state.loading,
 
   GET_EDIT_FIRSTNAME: state => state.editForm.firstname,
@@ -33,6 +36,10 @@ const getters = {
 const mutations = {
   SET_USERS(state, payload) {
     state.users = payload;
+  },
+
+  SET_USER(state, payload) {
+    state.user = payload;
   },
 
   SET_LOADING(state, payload) {
@@ -123,6 +130,10 @@ const actions = {
       alert("Failed to delete user!");
     }
     store.commit("global/SET_DIALOG_DELETE", false);
+  },
+
+  async resetPassword({ state }, form) {
+    await usePost(`/users/${state.user.data.user_id}/password/reset`, form);
   },
 };
 

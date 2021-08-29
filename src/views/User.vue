@@ -13,6 +13,10 @@
     <DialogLayout getter-val="GET_DIALOG_DELETE" setter-val="SET_DIALOG_DELETE">
       <UserDeleteForm />
     </DialogLayout>
+
+    <DialogLayout getter-val="GET_DIALOG_RESET" setter-val="SET_DIALOG_RESET">
+      <UserResetPasswordForm />
+    </DialogLayout>
   </FormLayout>
 </template>
 
@@ -23,6 +27,7 @@ import DialogLayout from "@/components/layout/DialogLayout";
 import UserCreateForm from "@/components/form/UserCreateForm";
 import UserEditForm from "@/components/form/UserEditForm";
 import UserDeleteForm from "@/components/form/UserDeleteForm";
+import UserResetPasswordForm from "@/components/form/UserResetPasswordForm";
 
 export default {
   name: "User",
@@ -33,13 +38,17 @@ export default {
     UserCreateForm,
     UserEditForm,
     UserDeleteForm,
+    UserResetPasswordForm,
   },
   async mounted() {
     await this.$store.dispatch("user/fetchUsers");
   },
 
   destroyed() {
-    this.$store.commit("user/SET_USERS", []);
+    const { commit } = this.$store;
+    commit("user/SET_USERS", []);
+    commit("user/SET_DELETE_USER_DATA", null);
+    commit("user/SET_USER", null);
   },
 };
 </script>

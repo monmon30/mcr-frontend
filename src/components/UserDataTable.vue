@@ -19,7 +19,7 @@
 
     <template v-slot:[`item.actions`]="{ item }">
       <v-row align="center" justify="center" dense>
-        <v-col sm="12" md="6">
+        <v-col sm="12" md="4">
           <v-btn
             dark
             color="green lighten-1"
@@ -30,8 +30,19 @@
             update
           </v-btn>
         </v-col>
+        <v-col sm="12" md="4">
+          <v-btn
+            dark
+            color="cyan lighten-1"
+            small
+            block
+            @click="setResetPassword(item)"
+          >
+            RESET PASSWORD
+          </v-btn>
+        </v-col>
 
-        <v-col sm="12" md="6">
+        <v-col sm="12" md="4">
           <v-btn
             dark
             color="red lighten-1"
@@ -85,6 +96,13 @@ export default {
       const { commit, dispatch } = this.$store;
       commit("user/SET_DELETE_USER_DATA", item);
       dispatch("global/openDialog", "SET_DIALOG_DELETE");
+    },
+
+    setResetPassword(item) {
+      console.log(item);
+      const { commit, dispatch } = this.$store;
+      commit("user/SET_USER", item);
+      dispatch("global/openDialog", "SET_DIALOG_RESET");
     },
   },
 

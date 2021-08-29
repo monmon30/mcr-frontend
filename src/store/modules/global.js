@@ -1,11 +1,10 @@
-// import { usePost, useFetch, usePut, useDelete } from "../../custom_hooks";
-
 const state = () => ({
   dialog: {
     view: false,
     create: false,
     edit: false,
     delete: false,
+    reset: false,
   },
 });
 
@@ -14,6 +13,7 @@ const getters = {
   GET_DIALOG_DELETE: state => state.dialog.delete,
   GET_DIALOG_CREATE: state => state.dialog.create,
   GET_DIALOG_VIEW: state => state.dialog.view,
+  GET_DIALOG_RESET: state => state.dialog.reset,
 };
 
 const mutations = {
@@ -29,6 +29,10 @@ const mutations = {
 
   SET_DIALOG_VIEW(state, payload) {
     state.dialog.view = payload;
+  },
+
+  SET_DIALOG_RESET(state, payload) {
+    state.dialog.reset = payload;
   },
 };
 
