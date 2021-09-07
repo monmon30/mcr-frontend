@@ -8,7 +8,7 @@ export const useFetch = async url => {
 
   try {
     loading = true;
-    response = await axios.get(url);
+    response = await axios.get(`api/${url}`);
     data = response.data.data;
   } catch (e) {
     isError = true;
@@ -26,7 +26,7 @@ export const useFetch = async url => {
  * @returns Object Response
  */
 
-export const usePost = async function (url, form) {
+export const usePost = async (url, form) => {
   let loading = false;
   let response = null;
   let isError = false;
@@ -34,7 +34,7 @@ export const usePost = async function (url, form) {
 
   try {
     loading = true;
-    response = await axios.post(url, form);
+    response = await axios.post(`api/${url}`, form);
     data = await response.data;
   } catch (e) {
     isError = true;
@@ -46,7 +46,7 @@ export const usePost = async function (url, form) {
   return { response, isError, data, loading };
 };
 
-export const usePut = async function (url, form) {
+export const usePut = async (url, form) => {
   let loading = false;
   let response = null;
   let isError = false;
@@ -54,7 +54,7 @@ export const usePut = async function (url, form) {
 
   try {
     loading = true;
-    response = await axios.put(url, form);
+    response = await axios.put(`api/${url}`, form);
     data = await response.data;
   } catch (e) {
     isError = true;
@@ -66,7 +66,7 @@ export const usePut = async function (url, form) {
   return { response, isError, data, loading };
 };
 
-export const useDelete = async function (url) {
+export const useDelete = async url => {
   let loading = false;
   let response = null;
   let isError = false;
@@ -74,7 +74,7 @@ export const useDelete = async function (url) {
 
   try {
     loading = true;
-    response = await axios.delete(url);
+    response = await axios.delete(`api/${url}`);
     data = await response.data;
   } catch (e) {
     isError = true;
@@ -84,4 +84,23 @@ export const useDelete = async function (url) {
   }
 
   return { response, isError, data, loading };
+};
+
+export const useWebFetch = async url => {
+  let loading = false;
+  let response = null;
+  let isError = false;
+  let data = null;
+
+  try {
+    const response = await axios.get(`${url}`);
+    data = response.data;
+  } catch (e) {
+    isError = true;
+    console.error(e);
+  } finally {
+    loading = false;
+  }
+
+  return { loading, response, isError, data };
 };

@@ -1,6 +1,10 @@
 <template>
   <FormLayout form-title="Reset Password" form-icon="mdi-form-textbox-password">
-    <v-form @submit.prevent="submitResetPassword">
+    <v-form
+      @submit.prevent="submitResetPassword"
+      ref="resetPasswordForm"
+      lazy-validation
+    >
       <v-row align="center" justify="center" dense>
         <v-col cols="12">
           <v-text-field
@@ -10,6 +14,7 @@
             dense
             :rules="[rules.fieldRequired]"
             type="password"
+            autocomplete="off"
           />
         </v-col>
 
@@ -24,6 +29,7 @@
               v => form.password == v || 'Password didnt matched!',
             ]"
             type="password"
+            autocomplete="off"
           />
         </v-col>
       </v-row>
@@ -57,6 +63,8 @@ export default {
   methods: {
     async submitResetPassword() {
       await this.$store.dispatch("user/resetPassword", this.form);
+      this.$refs.resetPasswordForm.reset();
+      this.$store.commit("global/SET_DIALOG_RESET", false);
     },
   },
 

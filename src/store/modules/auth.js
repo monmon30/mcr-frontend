@@ -27,13 +27,13 @@ const mutations = {
 
 const actions = {
   async fetchAuthUser({ commit }) {
-    const response = await useFetch("/auth/user");
+    const response = await useFetch("auth/user");
     commit("SET_USER", response.data);
     return response;
   },
 
   async login({ commit, state, dispatch }, form) {
-    const { data, isError: isErrorLogin } = await usePost("/auth/login", form);
+    const { data, isError: isErrorLogin } = await usePost("auth/login", form);
     await commit("SET_ACCESS_TOKEN", `${data.token_type} ${data.access_token}`);
     axios.defaults.headers.common["Authorization"] = state.accessToken;
     const { isError: isErrorFetchUser } = await dispatch("fetchAuthUser");
@@ -46,7 +46,7 @@ const actions = {
   },
 
   async logout({ commit }) {
-    await usePost("/auth/logout");
+    await usePost("auth/logout");
     sessionStorage.removeItem("_token");
     await commit("SET_USER", null);
     await commit("SET_ACCESS_TOKEN", null);

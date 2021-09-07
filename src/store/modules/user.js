@@ -93,14 +93,14 @@ const mutations = {
 const actions = {
   async fetchUsers({ commit }) {
     commit("SET_LOADING", true);
-    const { data, loading } = await useFetch("/users");
+    const { data, loading } = await useFetch("users");
     await commit("SET_USERS", data);
     await commit("SET_LOADING", loading);
   },
 
   async createUser({ commit, state }, form) {
     commit("SET_LOADING", true);
-    const { data, loading } = await usePost("/users", form);
+    const { data, loading } = await usePost("users", form);
     await state.users.unshift(data);
     await commit("SET_LOADING", loading);
   },
@@ -108,7 +108,7 @@ const actions = {
   async updateUser({ commit, state }) {
     commit("SET_LOADING", true);
     const { data, loading } = await usePut(
-      `/users/${state.editId}`,
+      `users/${state.editId}`,
       state.editForm
     );
     await commit("SET_LOADING", loading);
@@ -121,7 +121,7 @@ const actions = {
   async deleteUser({ commit, state }) {
     commit("SET_LOADING", true);
     const { loading, isError } = await useDelete(
-      `/users/${state.deleteUserData.data.user_id}`
+      `users/${state.deleteUserData.data.user_id}`
     );
     commit("SET_LOADING", loading);
     const newArr = state.users.filter(user => user !== state.deleteUserData);
@@ -133,7 +133,17 @@ const actions = {
   },
 
   async resetPassword({ state }, form) {
-    await usePost(`/users/${state.user.data.user_id}/password/reset`, form);
+    const { isError } = await usePost(
+      `users/${state.user.data.user_id}/password/reset`,
+      form
+    );
+    if (isError) {
+      alert("Failed to update password!");
+    } else {
+      alert("Password has been updated.");
+    }
+
+    return { isError };
   },
 };
 

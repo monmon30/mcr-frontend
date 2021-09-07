@@ -5,7 +5,10 @@ const state = () => ({
     edit: false,
     delete: false,
     reset: false,
+    viewPDF: false,
   },
+
+  pdf: null,
 });
 
 const getters = {
@@ -14,6 +17,8 @@ const getters = {
   GET_DIALOG_CREATE: state => state.dialog.create,
   GET_DIALOG_VIEW: state => state.dialog.view,
   GET_DIALOG_RESET: state => state.dialog.reset,
+  GET_DIALOG_VIEW_PDF: state => state.dialog.viewPDF,
+  GET_PDF: state => state.pdf,
 };
 
 const mutations = {
@@ -33,6 +38,14 @@ const mutations = {
 
   SET_DIALOG_RESET(state, payload) {
     state.dialog.reset = payload;
+  },
+
+  SET_DIALOG_VIEW_PDF(state, payload) {
+    state.dialog.viewPDF = payload;
+  },
+
+  SET_PDF(state, payload) {
+    state.pdf = payload;
   },
 };
 

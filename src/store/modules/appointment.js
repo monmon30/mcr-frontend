@@ -22,7 +22,7 @@ const mutations = {
 const actions = {
   async fetchAppointments({ commit }) {
     commit("SET_LOADING", true);
-    const { data, loading } = await useFetch("/appointments");
+    const { data, loading } = await useFetch("appointments");
     commit("SET_LOADING", loading);
     commit("SET_APPOINTMENTS", data);
   },

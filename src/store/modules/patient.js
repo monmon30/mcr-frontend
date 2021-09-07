@@ -1,4 +1,10 @@
-import { usePost, useFetch, usePut, useDelete } from "../../custom_hooks";
+import {
+  usePost,
+  useFetch,
+  usePut,
+  useDelete,
+  useWebFetch,
+} from "../../custom_hooks";
 import store from "../../store";
 import router from "../../router";
 
@@ -143,26 +149,26 @@ const mutations = {
 
 const actions = {
   async createPatient({ commit }, form) {
-    const { data } = await usePost("/patients", form);
+    const { data } = await usePost("patients", form);
     await commit("SET_ADDED_PATIENT", data);
   },
 
   async fetchPatients({ commit }) {
     commit("SET_LOADING", true);
-    const { data, response, loading } = await useFetch("/patients");
+    const { data, response, loading } = await useFetch("patients");
     await commit("SET_PATIENTS", data);
     await commit("SET_PATIENT_RESPONSE", response);
     await commit("SET_LOADING", loading);
   },
 
   async updatePatient({ state, dispatch }) {
-    const { data } = await usePut(`/patients/${state.editId}`, state.editForm);
+    const { data } = await usePut(`patients/${state.editId}`, state.editForm);
     alert(`${data.data.attributes.fullname} has been updated.`);
     dispatch("fetchPatients");
   },
 
   async deletePatient({ state, commit }, id) {
-    await useDelete(`/patients/${id}`);
+    await useDelete(`patients/${id}`);
     await store.commit("global/SET_DIALOG_DELETE", false);
     const filteredPatients = state.patients.filter(
       patient => id !== patient.data.patient_id
@@ -171,7 +177,7 @@ const actions = {
   },
 
   async login({ commit }, form) {
-    const { data, isError } = await usePost("/patients/auth/login", form);
+    const { data, isError } = await usePost("patients/auth/login", form);
     await commit("SET_AUTH_PATIENT", data);
     await commit("SET_AUTH_APPOINTMENTS", data.data.appointments);
     if (!isError) {
@@ -189,7 +195,7 @@ const actions = {
     commit("SET_LOADING", true);
 
     const { loading } = await usePost(
-      `/patients/${state.authPatient.data.patient_id}/appointments`,
+      `patients/${state.authPatient.data.patient_id}/appointments`,
       form
     );
     commit("SET_LOADING", loading);
@@ -197,7 +203,7 @@ const actions = {
 
   async fetchPatientAppointment({ state, commit }) {
     const { data } = await useFetch(
-      `/patients/${state.authPatient.data.patient_id}/appointments`
+      `patients/${state.authPatient.data.patient_id}/appointments`
     );
     console.log(data);
     commit("SET_AUTH_APPOINTMENTS", data.appointments);
@@ -208,9 +214,14 @@ const actions = {
     appointmentId
   ) {
     const { data } = await useFetch(
-      `/appointments/${appointmentId}/patients/${state.authPatient.data.patient_id}`
+      `appointments/${appointmentId}/patients/${state.authPatient.data.patient_id}`
     );
     commit("SET_APPOINTMENT_CONSULTATIONS", data);
+  },
+
+  async generatePatientConsultationReport(_, patientId) {
+    const { data } = await useWebFetch(`pdf/patients/${patientId}`);
+    store.commit("global/SET_PDF", data.data);
   },
 };
 

@@ -99,7 +99,6 @@ export default {
     },
 
     setResetPassword(item) {
-      console.log(item);
       const { commit, dispatch } = this.$store;
       commit("user/SET_USER", item);
       dispatch("global/openDialog", "SET_DIALOG_RESET");

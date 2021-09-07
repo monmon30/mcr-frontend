@@ -18,7 +18,7 @@ const actions = {
   async createConsultation(_, { form, patientId, appointmentId }) {
     const newForm = { ...form, ...{ appointment_id: appointmentId } };
     const { data } = await usePost(
-      `/patients/${patientId}/consultations`,
+      `patients/${patientId}/consultations`,
       newForm
     );
     console.log(data);
@@ -26,7 +26,7 @@ const actions = {
 
   async markAppointmentDone(_, { patientId, appointmentId }) {
     const { data } = await usePost(
-      `/patients/${patientId}/appointments/${appointmentId}/done`
+      `patients/${patientId}/appointments/${appointmentId}/done`
     );
     console.log(data, "appointment done!");
   },
