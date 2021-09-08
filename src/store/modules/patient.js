@@ -149,8 +149,15 @@ const mutations = {
 
 const actions = {
   async createPatient({ commit }, form) {
-    const { data } = await usePost("patients", form);
+    commit("SET_LOADING", true);
+    const { data, loading, isError } = await usePost("patients", form);
     await commit("SET_ADDED_PATIENT", data);
+    commit("SET_LOADING", loading);
+    if (isError) {
+      alert("Failed to add patient!");
+    } else {
+      alert("Patient has been added successfully!");
+    }
   },
 
   async fetchPatients({ commit }) {

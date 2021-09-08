@@ -4,6 +4,7 @@
       @submit.prevent="submitPatient"
       v-model="valid"
       ref="patientCreateForm"
+      :disabled="$store.getters['patient/GET_LOADING']"
     >
       <v-row align="center" justify="center" dense>
         <v-col sm="12" md="3">
